@@ -26,6 +26,8 @@
         </activity>
 
         <receiver android:name=".NotificationReceiver"/>
+        <receiver android:name=".Receiver"/>
+        <receiver android:name=".ReceiverDismiss"/>
     </application>
 
 </manifest>

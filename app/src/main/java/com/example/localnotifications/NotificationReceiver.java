@@ -44,7 +44,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setPriority(NotificationCompat.PRIORITY_HIGH);
 
         compat = NotificationManagerCompat.from(context);
-        compat.notify(1, builder.build());
+        compat.notify(2, builder.build());
 
     }
 

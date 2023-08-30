@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.*;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.Icon;
 import android.os.Build;
 import android.widget.Button;
 import androidx.annotation.NonNull;
@@ -12,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.content.ContextCompat;
 import com.google.android.material.snackbar.Snackbar;
@@ -110,6 +111,49 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.POST_NOTIFICATIONS},
                     1);
         } else {
+
+            // OPEN MAIN ACTIVITY AFTER CLICKING ON NOTIFICATION
+            Intent intent = new Intent(this, MainActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(
+                    this,
+                    0,
+                    intent,
+                    PendingIntent.FLAG_IMMUTABLE);
+
+
+            // ADD ACTION BUTTON TO NOTIFICATION
+            Intent actionIntent = new Intent(this, Receiver.class);
+            actionIntent.putExtra("toast", "This is notification toast message!");
+            PendingIntent actionPendingIntent = PendingIntent.getBroadcast(
+                    this,
+                    0,
+                    actionIntent,
+                    PendingIntent.FLAG_IMMUTABLE
+            );
+            Notification.Action action = new Notification.Action.Builder(
+                    Icon.createWithResource(
+                            this,
+                            R.drawable.baseline_notifications_24),
+                    "Toast Message",
+                    actionPendingIntent
+            ).build();
+
+            // ADD DISMISS ACTION BUTTON TO NOTIFICATION
+            Intent dismissIntent = new Intent(this, ReceiverDismiss.class);
+            PendingIntent dissmissPendingIntent = PendingIntent.getBroadcast(
+                    this,
+                    0,
+                    dismissIntent,
+                    PendingIntent.FLAG_IMMUTABLE);
+            Notification.Action dismissAction = new Notification.Action.Builder(
+                    Icon.createWithResource(
+                            this,
+                            R.drawable.baseline_notifications_24),
+                    "Dismiss",
+                    dissmissPendingIntent
+            ).build();
+
+
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
                     "firstNotification",
@@ -122,7 +166,12 @@ public class MainActivity extends AppCompatActivity {
             builder.setSmallIcon(R.drawable.baseline_notifications_24)
                     .setContentTitle("First Notification!")
                     .setContentText("Notification Text")
-                    .setPriority(Notification.PRIORITY_DEFAULT);
+                    .setPriority(Notification.PRIORITY_DEFAULT)
+                    .setContentIntent(pendingIntent)
+                    .addAction(action)
+                    .addAction(dismissAction)
+                    .setColor(Color.BLUE)
+                    .setAutoCancel(true);
 
 
             NotificationManagerCompat compat = NotificationManagerCompat.from(MainActivity.this);
