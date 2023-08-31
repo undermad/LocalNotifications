@@ -4,6 +4,8 @@ import android.Manifest;
 import android.app.*;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.Icon;
 import android.os.Build;
@@ -153,6 +155,10 @@ public class MainActivity extends AppCompatActivity {
                     dissmissPendingIntent
             ).build();
 
+            // ADD CUSTOM IMAGE / TEXT
+            Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground);
+            String longText = getResources().getString(R.string.long_text);
+
 
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
@@ -171,7 +177,10 @@ public class MainActivity extends AppCompatActivity {
                     .addAction(action)
                     .addAction(dismissAction)
                     .setColor(Color.BLUE)
-                    .setAutoCancel(true);
+                    .setLargeIcon(icon)
+                    .setAutoCancel(true)
+//                    .setStyle(new Notification.BigPictureStyle().bigPicture(icon))
+                    .setStyle(new Notification.BigTextStyle().bigText(getResources().getString(R.string.long_text)));
 
 
             NotificationManagerCompat compat = NotificationManagerCompat.from(MainActivity.this);

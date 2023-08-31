@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">LocalNotifications</string>
+    <string name="long_text">This is very looooong text! This is very looooong text! This is very looooong text!
+        This is very looooong text! This is very looooong text! This is very looooong text!
+        This is very looooong text! This is very looooong text! This is very looooong text! This is very looooong text!
+        This is very looooong text! This is very looooong text! This is very looooong text!
+        This is very looooong text! This is very looooong text! This is very looooong text! This is very looooong text!
+        This is very looooong text! This is very looooong text! This is very looooong text! </string>
 </resources>
